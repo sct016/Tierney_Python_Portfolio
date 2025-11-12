@@ -1,5 +1,5 @@
 # Tierney_Python_Portfolio
-This is my final project for the first python series 
+This is my final project for the first python series. It is a collection of all that has been learned so far. 
 
 ## Using Jupyter Notebooks 1 and 2
 
