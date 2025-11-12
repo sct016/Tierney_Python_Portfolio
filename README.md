@@ -1,7 +1,7 @@
 # Tierney_Python_Portfolio
 This is my final project for the first python series 
 
-##Using Jupyter Notebooks 1
+## Using Jupyter Notebooks 1
 
 In this analysis, we downloaded data to be used further in the class, and sorted numbers and created grapths
 
