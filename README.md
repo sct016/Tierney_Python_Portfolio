@@ -908,6 +908,147 @@ else:
     minima add up to zero! -> HEALTHY PARTICIPANT ALERT!
 
 
+## Creating Functions 1
+
+In this exercise, we coded for the conversion between fahrenheit and kelvin in order to use Jupyter as a calculator for quick calculations. 
+
+```python
+fahrenheit_val = 99
+celsius_val = ((fahrenheit_val - 32)*5/9)
+
+print(celsius_val)
+```
+
+    37.22222222222222
+
+
+
+```python
+fahrenheit_val2 = 43
+celsius_val2 = ((fahrenheit_val2 - 32)*5/9)
+
+print(celsius_val2)
+```
+
+    6.111111111111111
+
+
+
+```python
+def explicit_fahr_to_celsius(temp):
+    # assign the converted value to a variable 
+    converted = ((temp - 32)*5/9)
+    # return the values of the new variable 
+    return converted
+```
+
+
+```python
+def fahr_to_celsius(temp):
+    # return converted values more efficiently using the retun function without creating 
+    # a new variable. THis code does the same thing as the previous function but it is more
+    # explicit in explaining how the return command workd.
+    return ((temp - 32)*5/9)
+```
+
+
+```python
+fahr_to_celsius(32)
+```
+
+
+
+
+    0.0
+
+
+
+
+```python
+explicit_fahr_to_celsius(32)
+```
+
+
+
+
+    0.0
+
+
+
+
+```python
+print('freezing point of water:', fahr_to_celsius(32), 'C')
+print('boiling point of water:', fahr_to_celsius(212), 'C')
+```
+
+    freezing point of water: 0.0 C
+    boiling point of water: 100.0 C
+
+
+
+```python
+def celsius_to_kelvin(temp_c):
+    return temp_c + 273.15
+print('freezing point of water in Kelvin:', celsius_to_kelvin(0.))
+
+```
+
+    freezing point of water in Kelvin: 273.15
+
+
+
+```python
+def fahr_to_kelvin(temp_f):
+    temp_c = fahr_to_celsius(temp_f)
+    temp_k = celsius_to_kelvin(temp_c)
+    return temp_k
+print('boiling point of water in Kelvin:', fahr_to_kelvin(212.0))
+```
+
+    boiling point of water in Kelvin: 373.15
+
+
+
+```python
+print('Again, temperature in Kelvin was:', temp_k)
+```
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-16-eed2471d229b> in <module>
+    ----> 1 print('Again, temperature in Kelvin was:', temp_k)
+    
+
+    NameError: name 'temp_k' is not defined
+
+
+
+```python
+temp_kelvin = fahr_to_kelvin(212.0)
+print('temperature in kelvin was:', temp_kelvin)
+```
+
+    temperature in kelvin was: 373.15
+
+
+
+```python
+def print_temperatures ():
+    print('temperature in fahrenheit was:', temp_fahr)
+    print('temperature in kelvin was:', temp_kelvin)
+    
+temp_fahr = 212.0
+temp_kelvin = fahr_to_kelvin(temp_fahr)
+
+print_temperatures()
+```
+
+    temperature in fahrenheit was: 212.0
+    temperature in kelvin was: 373.15
+
 
 
 ## Creating Functions 2, 3, 4 
@@ -1642,9 +1783,93 @@ print(rna_sequence)
 
 
 
+## Translating RNA into Protein 
+
+In this exercise, we used the RNA which was created in the previous exercise to further code to give us the protein letters for each codon by writing out the codon log. 
+
+``python
+# Prompt the user to enter the input RNA file name
+
+input_file_name = input("Enter the name of the input RNA file:")
+```
+
+    Enter the name of the input RNA file: ubiquitin
+
+
+
 ```python
+# Open the input RNA file and read the RNA sequence
+
+with open(input_file_name, "r") as input_file:
+    rna_sequence = input_file.read().strip()
+```
+
+
+```python
+# Define the codon table 
+
+codon_table = {
+    "UUU": "F", "UUC": "F", "UUA": "L", "UUG": "L",
+    "CUU": "L", "CUC": "L", "CUA": "L", "CUG": "L",
+    "AUU": "I", "AUC": "I", "AUA": "I", "AUG": "M",
+    "GUU": "V", "GUC": "V", "GUA": "V", "GUG": "V",
+    "UCU": "S", "UCC": "S", "UCA": "S", "UCG": "S",
+    "CCU": "P", "CCC": "P", "CCA": "P", "CCG": "P", 
+    "ACU": "T", "ACC": "T", "ACA": "T", "ACG": "T", 
+    "GCU": "A", "GCC": "A", "GCA": "A", "GCG": "A",
+    "UAU": "Y", "UAC": "Y", "UAA": "*", "UAG": "*", 
+    "CAU": "H", "CAC": "H", "CAA": "Q", "CAG": "Q",
+    "AAU": "N", "AAC": "N", "AAA": "K", "AAG": "K",
+    "GAU": "D", "GAC": "D", "GAA": "E", "GAG": "E",
+    "UGU": "C", "UGC": "C", "UGA": "*", "UGG": "W",
+    "CGU": "R", "CGC": "R", "CGA": "R", "CGG": "R", 
+    "AGU": "S", "AGC": "S", "AGA": "R", "AGG": "R", 
+    "GGU": "G", "GGC": "G", "GGA": "G", "GGG": "G"
+
+}
+```
+
+
+```python
+# translate RNA to protein
+
+protein_sequence = " "
+for i in range(0, len(rna_sequence), 3):
+    codon = rna_sequence[i:i+3]
+    if len(codon) == 3:
+        amino_acid = codon_table[codon]
+        if amino_acid == "*": 
+            break
+        protein_sequence += amino_acid
+```
+
+
+```python
+# Prompt the user to enter the output file name 
+
+output_file_name = input("Enter the name of the output file: ")
+```
+
+    Enter the name of the output file:  Ubiquitin_Protein.txt
 
 
 
+```python
+# Save the protein sequence to a text file 
+
+with open(output_file_name, "w") as output_file:
+    output_file.write(protein_sequence)
+    print(f"The protein sequence has been saved to {output_file_name}")
+```
+
+    The protein sequence has been saved to Ubiquitin_Protein.txt
+
+
+
+```python
+print(protein_sequence)
+```
+
+     MSDEKKGGETEHINLKVLGQDNAVVQFKIKKHTPLRKLMNAYCDRAGLSMQVVRFRFDGQPINENDTPTSLEMEEGDTIEVYQQQTGGAP
 
 
